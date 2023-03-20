@@ -149,6 +149,64 @@ async function updateManager() {
   });
 }
 
+async function deleteDepartment() {
+  const employeesDb = new EmployeesDb();
+
+  const [departmentRows] = await employeesDb.getDepartments();
+
+  const departmentChoices = departmentRows.map((departmentRow) => ({
+    value: departmentRow.id,
+    name: departmentRow.name,
+  }));
+
+  const deleteDepartmentQuestion =
+    getDeleteDepartmentQuestion(departmentChoices);
+
+  inquirer.prompt(deleteDepartmentQuestion).then(async (answers) => {
+    await employeesDb.deleteDepartment(answers.department);
+    console.log(`The department was deleted`);
+    mainMenu();
+  });
+}
+
+async function deleteRole() {
+  const employeesDb = new EmployeesDb();
+
+  const [roleRows] = await employeesDb.getRoles();
+
+  const roleChoices = roleRows.map((roleRow) => ({
+    value: roleRow.id,
+    name: roleRow.title,
+  }));
+
+  const deleteRoleQuestion = getDeleteRoleQuestion(roleChoices);
+
+  inquirer.prompt(deleteRoleQuestion).then(async (answers) => {
+    await employeesDb.deleteRole(answers.role);
+    console.log(`The role was deleted`);
+    mainMenu();
+  });
+}
+
+async function deleteEmployee() {
+  const employeesDb = new EmployeesDb();
+
+  const [employeeRows] = await employeesDb.getEmployees();
+
+  const employeeChoices = employeeRows.map((employeeRow) => ({
+    value: employeeRow.id,
+    name: employeeRow.first_name + " " + employeeRow.last_name,
+  }));
+
+  const deleteEmployeeQuestion = getDeleteEmployeeQuestion(employeeChoices);
+
+  inquirer.prompt(deleteEmployeeQuestion).then(async (answers) => {
+    await employeesDb.deleteEmployee(answers.employee);
+    console.log(`The employee was deleted`);
+    mainMenu();
+  });
+}
+
 const mainMenuQuestions = [
   {
     type: "list",
@@ -250,6 +308,33 @@ const getUpdateManagerQuestions = (employeeChoices, managerChoices) => [
     message: "Which manager do you want to assign to the selected employee?",
     name: "manager",
     choices: managerChoices,
+  },
+];
+
+const getDeleteDepartmentQuestion = (departmentChoices) => [
+  {
+    type: "list",
+    message: "Which department do you want to delete?",
+    name: "department",
+    choices: departmentChoices,
+  },
+];
+
+const getDeleteRoleQuestion = (roleChoices) => [
+  {
+    type: "list",
+    message: "Which role do you want to delete?",
+    name: "role",
+    choices: roleChoices,
+  },
+];
+
+const getDeleteEmployeeQuestion = (employeeChoices) => [
+  {
+    type: "list",
+    message: "Which employee do you want to delete?",
+    name: "employee",
+    choices: employeeChoices,
   },
 ];
 
