@@ -89,6 +89,66 @@ async function addEmployee() {
   });
 }
 
+async function updateRole() {
+  const employeesDb = new EmployeesDb();
+
+  const [roleRows] = await employeesDb.getRoles();
+
+  const roleChoices = roleRows.map((roleRow) => ({
+    value: roleRow.id,
+    name: roleRow.title,
+  }));
+
+  const [employeeRows] = await employeesDb.getEmployees();
+
+  const employeeChoices = employeeRows.map((employeeRow) => ({
+    value: employeeRow.id,
+    name: employeeRow.first_name + " " + employeeRow.last_name,
+  }));
+
+  const updateRoleQuestions = getUpdateRoleQuestions(
+    employeeChoices,
+    roleChoices
+  );
+
+  inquirer.prompt(updateRoleQuestions).then(async (answers) => {
+    await employeesDb.updateRole(answers.employee, answers.role);
+
+    console.log(`Updated employee's role`);
+    mainMenu();
+  });
+}
+
+async function updateManager() {
+  const employeesDb = new EmployeesDb();
+
+  const [managerRows] = await employeesDb.getEmployees();
+
+  const managerChoices = managerRows.map((managerRow) => ({
+    value: managerRow.id,
+    name: managerRow.first_name + " " + managerRow.last_name,
+  }));
+
+  const [employeeRows] = await employeesDb.getEmployees();
+
+  const employeeChoices = employeeRows.map((employeeRow) => ({
+    value: employeeRow.id,
+    name: employeeRow.first_name + " " + employeeRow.last_name,
+  }));
+
+  const updateManagerQuestions = getUpdateManagerQuestions(employeeChoices, [
+    { value: null, name: "None" },
+    ...managerChoices,
+  ]);
+
+  inquirer.prompt(updateManagerQuestions).then(async (answers) => {
+    await employeesDb.updateManager(answers.employee, answers.manager);
+    console.log(answers.employee + " " + answers.manager);
+    console.log(`Updated employee's manager`);
+    mainMenu();
+  });
+}
+
 const mainMenuQuestions = [
   {
     type: "list",
@@ -158,6 +218,36 @@ const getAddEmployeeQuestions = (roleChoices, managerChoices) => [
   {
     type: "list",
     message: "Who is the employee's manager?",
+    name: "manager",
+    choices: managerChoices,
+  },
+];
+
+const getUpdateRoleQuestions = (employeeChoices, roleChoices) => [
+  {
+    type: "list",
+    message: "Which employee's role do you want to update?",
+    name: "employee",
+    choices: employeeChoices,
+  },
+  {
+    type: "list",
+    message: "Which role do you want to assign to the selected employee?",
+    name: "role",
+    choices: roleChoices,
+  },
+];
+
+const getUpdateManagerQuestions = (employeeChoices, managerChoices) => [
+  {
+    type: "list",
+    message: "Which employee's manager do you want to update?",
+    name: "employee",
+    choices: employeeChoices,
+  },
+  {
+    type: "list",
+    message: "Which manager do you want to assign to the selected employee?",
     name: "manager",
     choices: managerChoices,
   },
