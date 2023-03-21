@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const cTable = require("console.table");
 const EmployeesDb = require("./lib/EmployeesDb");
 
+//View the tables
 async function viewDepartments() {
   const [rows] = await new EmployeesDb().getDepartments();
 
@@ -23,6 +24,7 @@ async function viewEmployees() {
   mainMenu();
 }
 
+//Add to the tables
 async function addDepartment() {
   inquirer.prompt(addDepartmentQuestions).then(async (answers) => {
     await new EmployeesDb().addDepartment(answers.name);
@@ -37,9 +39,10 @@ async function addRole() {
 
   const [departmentRows] = await employeesDb.getDepartments();
 
+  //Departments from mysql table to go into inquirer list choices
   const departmentChoices = departmentRows.map((departmentRow) => ({
-    value: departmentRow.id,
-    name: departmentRow.name,
+    value: departmentRow.id, //goes into the app
+    name: departmentRow.name, //appears to user
   }));
 
   const addRoleQuestions = getAddRoleQuestions(departmentChoices);
@@ -66,11 +69,11 @@ async function addEmployee() {
 
   const managerChoices = managerRows.map((managerRow) => ({
     value: managerRow.id,
-    name: managerRow.first_name + " " + managerRow.last_name,
+    name: managerRow.first_name + " " + managerRow.last_name, //full name
   }));
 
   const addEmployeeQuestions = getAddEmployeeQuestions(roleChoices, [
-    { value: null, name: "None" },
+    { value: null, name: "None" }, //add "None" option to the inquirer list choices before manager choices
     ...managerChoices,
   ]);
 
@@ -89,6 +92,7 @@ async function addEmployee() {
   });
 }
 
+//Update employee's role
 async function updateRole() {
   const employeesDb = new EmployeesDb();
 
@@ -119,6 +123,7 @@ async function updateRole() {
   });
 }
 
+//Update employee's manager
 async function updateManager() {
   const employeesDb = new EmployeesDb();
 
@@ -148,7 +153,7 @@ async function updateManager() {
     mainMenu();
   });
 }
-
+//Delete entries from tables
 async function deleteDepartment() {
   const employeesDb = new EmployeesDb();
 
@@ -207,6 +212,7 @@ async function deleteEmployee() {
   });
 }
 
+//Main menu to appear after each choice
 const mainMenuQuestions = [
   {
     type: "list",
@@ -237,6 +243,7 @@ const addDepartmentQuestions = [
   },
 ];
 
+//Get questions with choices from the database tables included
 const getAddRoleQuestions = (departmentChoices) => [
   {
     type: "input",
@@ -338,6 +345,7 @@ const getDeleteEmployeeQuestion = (employeeChoices) => [
   },
 ];
 
+//Call a relevant function after each choice
 function mainMenu() {
   inquirer.prompt(mainMenuQuestions).then((answer) => {
     switch (answer.menu) {
@@ -392,6 +400,7 @@ function mainMenu() {
   });
 }
 
+//Initiate app with the title
 function init() {
   console.log(`
   ----------------------
