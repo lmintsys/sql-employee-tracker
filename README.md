@@ -12,10 +12,11 @@ To create this app, Inquirer, MySQL2 and console.table packages were installed.
 
 ## Usage
 
-When the app starts, a user is prompted with a menu that provides various options for interacting with the employees database. The user can view each of the three tables: departments, roles, and employees. Additionally, they can add rows to any of the tables, update either an employee's role or manager, and delete rows from any of the tables.
-![menu](assets/menu.png)
-![employees](assets/employees.png)
-![add](assets/add-employee.png)
+When the app starts, a user is prompted with a menu that provides various options for interacting with the employees database. The user can view each of the three tables: departments, roles, and employees. Additionally, they can add rows to any of the tables, update either an employee's role or manager, and delete rows from any of the tables.  
+![menu](assets/menu.png)  
+![employees](assets/employees.png)  
+![add](assets/add-employee.png)  
+[Walkthrough video]()
 
 ## Credits
 
