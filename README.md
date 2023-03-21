@@ -4,7 +4,7 @@
 
 ## Description
 
-The aim of this project was to create an employee tracker that will allow users to manage a company's employee database. Specifically, the user will be able to view the tables that contain information on company's departments, roles, and employees database, update and delete entries as needed. This application provides a user-friendly interface to interact with a database. Working on this project helped me gaininng further understanding of how to create an interactive app outside the browser that communicates with the user, and allows for a database management.
+The aim of this project was to create an employee tracker that will allow users to manage a company's employee database. Specifically, the user will be able to view the tables that contain information on company's departments, roles, and employees, update and delete entries as needed. This application provides a user-friendly interface to interact with a database. Working on this project helped me gaininng further understanding of how to create an interactive app outside the browser that communicates with the user and allows for a database management.
 
 ## Installation
 
