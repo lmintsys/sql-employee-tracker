@@ -16,7 +16,7 @@ When the app starts, a user is prompted with a menu that provides various option
 ![menu](assets/menu.png)  
 ![employees](assets/employees.png)  
 ![add](assets/add-employee.png)  
-[Walkthrough video]()
+[Walkthrough video](https://watch.screencastify.com/v/Pik6AM09CXri3LuRkYmR)
 
 ## Credits
 
