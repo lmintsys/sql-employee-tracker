@@ -394,6 +394,8 @@ function mainMenu() {
 
         break;
       case "Exit":
+        process.exit(0);
+
       default:
         break;
     }
