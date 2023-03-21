@@ -49,7 +49,6 @@ async function addRole() {
 
   inquirer.prompt(addRoleQuestions).then(async (answers) => {
     await employeesDb.addRole(answers.name, answers.salary, answers.department);
-    console.log(answers.department);
     console.log(`The role ${answers.name} was added`);
     mainMenu();
   });
@@ -148,7 +147,6 @@ async function updateManager() {
 
   inquirer.prompt(updateManagerQuestions).then(async (answers) => {
     await employeesDb.updateManager(answers.employee, answers.manager);
-    console.log(answers.employee + " " + answers.manager);
     console.log(`Updated employee's manager`);
     mainMenu();
   });
